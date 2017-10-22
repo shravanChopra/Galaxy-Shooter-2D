@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Galaxy Shooter\Scripts\Laser.cs" />
      <Compile Include="Assets\Galaxy Shooter\Scripts\Player.cs" />
      <None Include="Assets\Galaxy Shooter\Materials\Shaders\Galaxy.shader" />
  <Reference Include="Facebook.Unity.Settings">
