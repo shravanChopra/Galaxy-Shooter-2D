@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Galaxy Shooter\Scripts\Laser.cs" />
      <Compile Include="Assets\Galaxy Shooter\Scripts\Player.cs" />
+     <Compile Include="Assets\Galaxy Shooter\Scripts\PowerUp.cs" />
      <None Include="Assets\Galaxy Shooter\Materials\Shaders\Galaxy.shader" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>/Users/shrav_20/Desktop/Galaxy Shooter/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
