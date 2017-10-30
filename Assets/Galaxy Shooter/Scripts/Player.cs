@@ -5,7 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
 	// power ups 
-	public bool tripleShotEnabled = false;
+	[SerializeField] private bool tripleShotEnabled = false;
+	[SerializeField] private bool speedBoostEnabled = false;
 
 	[SerializeField] private float _speed = 5.0f;
 	[SerializeField] private float _fireRate = 0.25f;
@@ -34,6 +35,14 @@ public class Player : MonoBehaviour {
 	private void ControlMovement ()
 	{
 		// enable vertical and horizontal movement through user input
+		if (speedBoostEnabled)
+		{
+			_speed *= 1.5f;
+		}
+		else 
+		{
+			_speed = 5.0f;
+		}
 		transform.Translate(Vector3.right * _speed * Input.GetAxis("Horizontal") * Time.deltaTime);
 		transform.Translate(Vector3.up * _speed * Input.GetAxis("Vertical") * Time.deltaTime);
 
@@ -78,9 +87,28 @@ public class Player : MonoBehaviour {
 		tripleShotEnabled = true;
 		StartCoroutine(TripleShotPowerDownRoutine());
 	}
+
+	public void EnableSpeedBoost()
+	{
+		speedBoostEnabled = true;
+		StartCoroutine(SpeedBoostPowerDownRoutine());
+	}
+
+	public void EnableShield()
+	{
+		
+	}
+
+	// Cool-down systems for powerUps
 	public IEnumerator TripleShotPowerDownRoutine()
 	{
 		yield return new WaitForSeconds(5.0f);
 		tripleShotEnabled = false;
+	}
+
+	public IEnumerator SpeedBoostPowerDownRoutine()
+	{
+		yield return new WaitForSeconds(5.0f);
+		speedBoostEnabled = false;
 	}
 }
