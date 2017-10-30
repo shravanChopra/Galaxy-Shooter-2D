@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+	// references to other GameObjects
+	[SerializeField] private GameObject _laserPrefab;
+	[SerializeField] private GameObject _explosionPrefab;
+
+
 	// power ups 
 	[SerializeField] private bool tripleShotEnabled = false;
 	[SerializeField] private bool speedBoostEnabled = false;
 
+	// variables for firing lasers
 	[SerializeField] private float _speed = 5.0f;
-	[SerializeField] private float _fireRate = 0.25f;
-	
-	[SerializeField] private GameObject _laserPrefab;
-
+	[SerializeField] private float _fireRate = 0.25f;	
 	private float _nextFireTime = 0.0f;
 	
+	public int lives = 3;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -80,6 +85,16 @@ public class Player : MonoBehaviour {
 			Instantiate(_laserPrefab, transform.position + Vector3.up, Quaternion.identity);
 			_nextFireTime = Time.time + _fireRate;
 		}	
+	}
+
+	public void TakeDamage()
+	{
+		--lives;
+		if(lives == 0)
+		{
+			Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+			Destroy(gameObject);
+		}
 	}
 
 	public void EnableTripleShot()
