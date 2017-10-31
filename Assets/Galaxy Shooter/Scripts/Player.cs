@@ -7,11 +7,12 @@ public class Player : MonoBehaviour {
 	// references to other GameObjects
 	[SerializeField] private GameObject _laserPrefab;
 	[SerializeField] private GameObject _explosionPrefab;
-
+	[SerializeField] private GameObject _shieldGameObject;
 
 	// power ups 
-	[SerializeField] private bool tripleShotEnabled = false;
-	[SerializeField] private bool speedBoostEnabled = false;
+	[SerializeField] private bool _tripleShotEnabled = false;
+	[SerializeField] private bool _speedBoostEnabled = false;
+	[SerializeField] private bool _shieldEnabled = false;
 
 	// variables for firing lasers
 	[SerializeField] private float _speed = 5.0f;
@@ -40,7 +41,7 @@ public class Player : MonoBehaviour {
 	private void ControlMovement ()
 	{
 		// enable vertical and horizontal movement through user input
-		if (speedBoostEnabled)
+		if (_speedBoostEnabled)
 		{
 			_speed *= 1.5f;
 		}
@@ -75,7 +76,7 @@ public class Player : MonoBehaviour {
 	{
 		if (Time.time > _nextFireTime)
 		{
-			if (tripleShotEnabled)
+			if (_tripleShotEnabled)
 			{
 				// spawn the other two lasers at (+- 0.55, 0.08, 0) relative to current position
 				Instantiate(_laserPrefab, transform.position + new Vector3(0.55f, 0.08f, 0f), Quaternion.identity);
@@ -89,41 +90,52 @@ public class Player : MonoBehaviour {
 
 	public void TakeDamage()
 	{
-		--lives;
-		if(lives == 0)
+		// take one hit without sustaining damage if you have the shield
+		if (_shieldEnabled)
 		{
-			Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
-			Destroy(gameObject);
+			_shieldEnabled = false;
+			_shieldGameObject.SetActive(false);
 		}
+		else
+		{
+			--lives;
+			if(lives == 0)
+			{
+				Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+				Destroy(gameObject);
+			}
+		}
+		
 	}
 
 	public void EnableTripleShot()
 	{
-		tripleShotEnabled = true;
+		_tripleShotEnabled = true;
 		StartCoroutine(TripleShotPowerDownRoutine());
 	}
 
 	public void EnableSpeedBoost()
 	{
-		speedBoostEnabled = true;
+		_speedBoostEnabled = true;
 		StartCoroutine(SpeedBoostPowerDownRoutine());
 	}
 
 	public void EnableShield()
 	{
-		
+		_shieldEnabled = true;
+		_shieldGameObject.SetActive(true);
 	}
 
 	// Cool-down systems for powerUps
 	public IEnumerator TripleShotPowerDownRoutine()
 	{
 		yield return new WaitForSeconds(5.0f);
-		tripleShotEnabled = false;
+		_tripleShotEnabled = false;
 	}
 
 	public IEnumerator SpeedBoostPowerDownRoutine()
 	{
 		yield return new WaitForSeconds(5.0f);
-		speedBoostEnabled = false;
+		_speedBoostEnabled = false;
 	}
 }

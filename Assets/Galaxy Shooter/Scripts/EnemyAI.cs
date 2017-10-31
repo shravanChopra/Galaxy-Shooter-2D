@@ -54,7 +54,7 @@ public class EnemyAI : MonoBehaviour {
 	private void Explode()
 	{
 		// play the explosion and destroy yourself
-		GameObject explosion = Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
+		Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
 		Destroy(gameObject);
 	}
 

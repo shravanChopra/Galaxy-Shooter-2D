@@ -30,6 +30,9 @@ public class PowerUp : MonoBehaviour {
 					case 1: 
 						player.EnableSpeedBoost();
 						break;
+					case 2:
+						player.EnableShield();
+						break;
 				}
 			}
 			// destroy this powerup

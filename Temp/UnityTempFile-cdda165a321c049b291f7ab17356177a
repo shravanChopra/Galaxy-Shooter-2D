@@ -88,6 +88,7 @@
 -define:UNITY_EDITOR_OSX
 -define:ENABLE_NATIVE_ARRAY_CHECKS
 -define:UNITY_TEAM_LICENSE
+'Assets/Galaxy Shooter/Scripts/EnemyAI.cs'
 'Assets/Galaxy Shooter/Scripts/Laser.cs'
 'Assets/Galaxy Shooter/Scripts/Player.cs'
 'Assets/Galaxy Shooter/Scripts/PowerUp.cs'
