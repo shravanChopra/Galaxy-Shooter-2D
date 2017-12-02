@@ -19,12 +19,28 @@ public class Player : MonoBehaviour {
 	[SerializeField] private float _fireRate = 0.25f;	
 	private float _nextFireTime = 0.0f;
 	
+	// variables to update UI
+	private UIManager _uiManager;
 	public int lives = 3;
+
+	// references to spawnManager and gameManager
+	private SpawnManager _spawnManager;
+	private GameManager _gameManager;
 
 	// Use this for initialization
 	void Start ()
 	{
 		transform.position = new Vector3(0, 0, 0);
+
+		// set handles
+		_uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+		_spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+		_gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+		if (_uiManager != null)
+		{
+			_uiManager.UpdateLives(lives);
+		}		
 	}
 	
 	// Update is called once per frame
@@ -99,10 +115,15 @@ public class Player : MonoBehaviour {
 		else
 		{
 			--lives;
+			_uiManager.UpdateLives(lives);
+
 			if(lives == 0)
 			{
 				Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 				Destroy(gameObject);
+
+				// end the game
+				_gameManager.EndGame();
 			}
 		}
 		
