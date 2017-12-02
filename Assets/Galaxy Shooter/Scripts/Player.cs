@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] private GameObject _laserPrefab;
 	[SerializeField] private GameObject _explosionPrefab;
 	[SerializeField] private GameObject _shieldGameObject;
+	[SerializeField] private GameObject[] _engines;
 
 	// power ups 
 	[SerializeField] private bool _tripleShotEnabled = false;
@@ -117,7 +118,12 @@ public class Player : MonoBehaviour {
 			--lives;
 			_uiManager.UpdateLives(lives);
 
-			if(lives == 0)
+			// show damage correctly according to number of hits taken
+			if (lives > 0)
+			{
+				_engines[lives - 1].SetActive(true);
+			}
+			else 
 			{
 				Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 				Destroy(gameObject);
@@ -126,7 +132,6 @@ public class Player : MonoBehaviour {
 				_gameManager.EndGame();
 			}
 		}
-		
 	}
 
 	public void EnableTripleShot()
