@@ -53,5 +53,13 @@ public class GameManager : MonoBehaviour
 	{
 		_startupImage.SetActive(true);
 		_isGameRunning = false;
+
+		// Destroy all 'Destructibles'
+		foreach (GameObject destructible in GameObject.FindGameObjectsWithTag("Destructible"))
+		{
+			Destroy(destructible);
+		}
 	}
+
+
 }
