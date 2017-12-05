@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] private bool _shieldEnabled = false;
 
 	// variables for firing lasers
-	[SerializeField] private float _speed = 5.0f;
+	[SerializeField] private float _moveSpeed = 5.0f;
 	[SerializeField] private float _fireRate = 0.25f;	
 	private float _nextFireTime = 0.0f;
 	
@@ -62,14 +62,14 @@ public class Player : MonoBehaviour {
 		// enable vertical and horizontal movement through user input
 		if (_speedBoostEnabled)
 		{
-			_speed *= 1.5f;
+			_moveSpeed = 10.0f;
 		}
 		else 
 		{
-			_speed = 5.0f;
+			_moveSpeed = 5.0f;
 		}
-		transform.Translate(Vector3.right * _speed * Input.GetAxis("Horizontal") * Time.deltaTime);
-		transform.Translate(Vector3.up * _speed * Input.GetAxis("Vertical") * Time.deltaTime);
+		transform.Translate(Vector3.right * _moveSpeed * Input.GetAxis("Horizontal") * Time.deltaTime);
+		transform.Translate(Vector3.up * _moveSpeed * Input.GetAxis("Vertical") * Time.deltaTime);
 
 		// set x bounds - let's wrap around!
 		if (transform.position.x > 9.4f)
