@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AudioManager.cs" />
      <Compile Include="Assets\Galaxy Shooter\Scripts\EnemyAI.cs" />
      <Compile Include="Assets\Galaxy Shooter\Scripts\GameManager.cs" />
      <Compile Include="Assets\Galaxy Shooter\Scripts\Laser.cs" />

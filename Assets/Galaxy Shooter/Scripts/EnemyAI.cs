@@ -11,11 +11,13 @@ public class EnemyAI : MonoBehaviour {
 	[SerializeField] private GameObject _enemyExplosionPrefab;
 	
 	private UIManager _uiManager;
+	private AudioManager _audioManager;
 
 	// Use this for initialization
 	void Start () 
 	{
 		_uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+		_audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 	}
 	
 	// Update is called once per frame
@@ -34,6 +36,7 @@ public class EnemyAI : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
+
 		// handle collisions with player
 		if (other.tag == "Player")
 		{
@@ -55,7 +58,9 @@ public class EnemyAI : MonoBehaviour {
 
 	private void Explode()
 	{
-		// play the explosion, update the player's score, and destroy yourself
+		// play explosion sound
+		_audioManager.PlayAudio(AudioManager.GameAudio.Explosion);
+
 		Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
 		_uiManager.UpdateScore();
 		Destroy(gameObject);

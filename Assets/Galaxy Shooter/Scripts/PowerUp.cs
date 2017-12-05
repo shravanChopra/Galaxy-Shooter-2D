@@ -7,6 +7,13 @@ public class PowerUp : MonoBehaviour {
 	[SerializeField] private float speed = 3f;
 	[SerializeField] private int powerupId;			// 0: tripleShot, 1: speedBoost, 2: shield
 
+	private AudioManager _audioManager;
+
+	void Start()
+	{
+		_audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -27,6 +34,9 @@ public class PowerUp : MonoBehaviour {
 	
 			if (player != null)
 			{
+				// play powerUp sound
+				_audioManager.PlayAudio(AudioManager.GameAudio.PowerUp);
+
 				switch(powerupId)
 				{
 					case 0: 
@@ -39,9 +49,9 @@ public class PowerUp : MonoBehaviour {
 						player.EnableShield();
 						break;
 				}
-			}
+			}			
 			// destroy this powerup
-			Destroy(gameObject);
+			Destroy(gameObject, 0.2f);
 		}
 	}
 }

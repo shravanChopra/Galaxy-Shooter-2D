@@ -24,9 +24,10 @@ public class Player : MonoBehaviour {
 	private UIManager _uiManager;
 	public int lives = 3;
 
-	// references to spawnManager and gameManager
+	// references to other managers
 	private SpawnManager _spawnManager;
 	private GameManager _gameManager;
+	private AudioManager _audioManager;
 
 	// Use this for initialization
 	void Start ()
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour {
 		_uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 		_spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 		_gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		_audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 
 		if (_uiManager != null)
 		{
@@ -91,6 +93,9 @@ public class Player : MonoBehaviour {
 	}
 	private void Shoot ()
 	{
+		// play laser sound
+		_audioManager.PlayAudio(AudioManager.GameAudio.Laser);
+
 		if (Time.time > _nextFireTime)
 		{
 			if (_tripleShotEnabled)
@@ -125,6 +130,9 @@ public class Player : MonoBehaviour {
 			}
 			else 
 			{
+				// play explosion sound
+				_audioManager.PlayAudio(AudioManager.GameAudio.Explosion);
+
 				Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 				Destroy(gameObject);
 
